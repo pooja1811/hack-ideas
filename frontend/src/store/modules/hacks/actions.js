@@ -1,28 +1,10 @@
-import axios from "../../../axios";
 import toast from "../../../plugins/mini-toastr";
 
 export const actions = {
   async getAllHacks({ commit }) {
     try {
-      const data = await axios.get(`/api/hacks/all`);
-      // const data = [
-      //   {
-      //     name: "hack1",
-      //     description: "hack 1 description",
-      //     tag: "feature",
-      //     createdBy: 15,
-      //     votedBy: [],
-      //     creationDate: "2021-10-13",
-      //   },
-      //   {
-      //     name: "hack2",
-      //     description: "hack 2 description",
-      //     tag: "bug",
-      //     createdBy: 20,
-      //     votedBy: [1, 2, 3],
-      //     creationDate: "2021-10-12",
-      //   },
-      // ];
+      const response = await fetch("/api/hacks/all");
+      const data = await response.json();
       commit("setAllHacks", data);
     } catch (error) {
       toast.error("Error in fetching Hacks");
@@ -31,7 +13,13 @@ export const actions = {
 
   async addHack({ dispatch }, hackData) {
     try {
-      await axios.post("/api/hacks", hackData);
+      await fetch("/api/hacks", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(hackData),
+      });
       toast.success("Hack added successfully");
       dispatch("getAllHacks");
     } catch (error) {
@@ -43,7 +31,13 @@ export const actions = {
     try {
       let hackId = hackData.$loki;
       delete hackData.$loki;
-      await axios.put(`/api/hacks/${hackId}`, hackData);
+      await fetch(`/api/hacks/${hackId}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(hackData),
+      });
       toast.success("Hack updated successfully");
       dispatch("getAllHacks");
     } catch (error) {
