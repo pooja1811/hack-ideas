@@ -26,6 +26,8 @@
             v-model="hackDetails.tag"
             :items="tags"
             label="Tags"
+            :rules="[(v) => (v || '').length > 0 || 'This field is required']"
+            required
           ></v-select>
           <v-card-actions no-gutters justify-end>
             <div class="pt-2 pb-2 pl-2 pr-2">

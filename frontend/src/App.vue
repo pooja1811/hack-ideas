@@ -9,7 +9,15 @@
           transition="scale-transition"
           width="40"
         />
-        <span class="font-weight-bold font-italic">Hack Ideas</span>
+        <span class="font-weight-bold font-italic" v-if="!userDetails.userId"
+          >Hack Ideas</span
+        >
+        <span class="font-weight-bold font-italic" v-else
+          >Welcome User {{ userDetails.userId }}</span
+        >
+      </div>
+      <div class="ml-auto mr-3">
+        <v-icon v-if="userDetails.userId" @click="logout"> mdi-logout </v-icon>
       </div>
     </v-app-bar>
 
@@ -20,11 +28,34 @@
 </template>
 
 <script>
+import { mapMutations, mapState } from "vuex";
 export default {
   name: "App",
 
   data: () => ({
     //
   }),
+
+  created() {
+    if (localStorage.getItem("userId")) {
+      let userId = JSON.parse(localStorage.getItem("userId"));
+      this.setUserDetails({ userId });
+    }
+  },
+
+  computed: {
+    ...mapState("users", ["userDetails"]),
+  },
+
+  methods: {
+    ...mapMutations("users", ["setUserDetails"]),
+    logout() {
+      localStorage.removeItem("userId");
+      this.$router.push({
+        name: "Login",
+      });
+      this.setUserDetails({});
+    },
+  },
 };
 </script>

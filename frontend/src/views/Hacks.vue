@@ -42,6 +42,9 @@
           :items-per-page="10"
           class="elevation-1"
         >
+          <template #item.creationDate="{ item }">
+            {{ item.creationDate | formatDate }}
+          </template>
           <template #item.actions="{ item }">
             <v-chip
               v-if="item.upvoteDetails.showUpvote"
@@ -55,6 +58,9 @@
                     : "mdi-clipboard-arrow-up"
                 }}
               </v-icon>
+            </v-chip>
+            <v-chip v-else color="green" text-color="white">
+              Created by you
             </v-chip>
           </template>
         </v-data-table>
@@ -118,6 +124,33 @@ export default {
     this.getAllHacks();
   },
 
+  filters: {
+    formatDate: function (value) {
+      if (!value) return "";
+      let dateObj = new Date(value);
+      var curr_date = dateObj.getDate();
+      var curr_month = dateObj.getMonth();
+      curr_month = curr_month + 1;
+      var curr_year = dateObj.getFullYear();
+      var curr_min = dateObj.getMinutes();
+      var curr_hr = dateObj.getHours();
+      var curr_sc = dateObj.getSeconds();
+      return (
+        curr_date +
+        "-" +
+        curr_month +
+        "-" +
+        curr_year +
+        " " +
+        curr_hr +
+        ":" +
+        curr_min +
+        ":" +
+        curr_sc
+      );
+    },
+  },
+
   methods: {
     ...mapActions("hacks", ["getAllHacks", "editHack"]),
     upvoteHack(hackDetails, hasUpvoted) {
@@ -129,7 +162,6 @@ export default {
       } else {
         votedBy.push(this.userDetails.userId);
       }
-      console.log("votedBy ", votedBy);
       this.editHack({ ...hackDetails, votedBy });
     },
   },

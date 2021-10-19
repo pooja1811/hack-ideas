@@ -67,6 +67,7 @@ export default {
     ...mapMutations("users", ["setUserDetails"]),
 
     submit() {
+      localStorage.setItem("userId", this.selectedUserId);
       this.setUserDetails({ userId: this.selectedUserId });
       this.$router.push({
         name: "Hacks",
