@@ -38,7 +38,7 @@ export default {
 
   created() {
     if (localStorage.getItem("userId")) {
-      let userId = JSON.parse(localStorage.getItem("userId"));
+      let userId = parseInt(localStorage.getItem("userId"));
       this.setUserDetails({ userId });
     }
   },
@@ -51,10 +51,10 @@ export default {
     ...mapMutations("users", ["setUserDetails"]),
     logout() {
       localStorage.removeItem("userId");
+      this.setUserDetails({});
       this.$router.push({
         name: "Login",
       });
-      this.setUserDetails({});
     },
   },
 };

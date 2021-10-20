@@ -1,6 +1,5 @@
 import { createLocalVue } from "@vue/test-utils";
 import Vuex from "vuex";
-import { shallowMount } from "@vue/test-utils";
 import mainStoreConfig from "./index";
 import toast from "../../../plugins/mini-toastr";
 

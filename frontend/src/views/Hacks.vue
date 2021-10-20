@@ -128,25 +128,25 @@ export default {
     formatDate: function (value) {
       if (!value) return "";
       let dateObj = new Date(value);
-      var curr_date = dateObj.getDate();
-      var curr_month = dateObj.getMonth();
-      curr_month = curr_month + 1;
-      var curr_year = dateObj.getFullYear();
-      var curr_min = dateObj.getMinutes();
-      var curr_hr = dateObj.getHours();
-      var curr_sc = dateObj.getSeconds();
+      let currDate = dateObj.getDate();
+      let currMonth = dateObj.getMonth();
+      currMonth = currMonth + 1;
+      let currYear = dateObj.getFullYear();
+      let currHour = dateObj.getHours();
+      let currMin = dateObj.getMinutes();
+      let currSecond = dateObj.getSeconds();
       return (
-        curr_date +
+        currDate +
         "-" +
-        curr_month +
+        currMonth +
         "-" +
-        curr_year +
+        currYear +
         " " +
-        curr_hr +
+        currHour +
         ":" +
-        curr_min +
+        currMin +
         ":" +
-        curr_sc
+        currSecond
       );
     },
   },
